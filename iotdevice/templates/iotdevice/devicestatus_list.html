@@ -74,7 +74,8 @@ Highcharts.chart('container', {
         }
     },
     xAxis: {
-        categories: [{% for i in object_list reversed %}"{{ i.date.isoformat }}"{% if not forloop.last %},{% endif %}{% endfor %}]
+        categories: [{% for i in object_list reversed %}"{{ i.date.isoformat }}"{% if not forloop.last %},{% endif %}{% endfor %}],
+        type: 'datetime'
     },
     series: [{% for index in object_list.0.status.sensors %}{
         name: "Sensor {{ forloop.counter }}",
