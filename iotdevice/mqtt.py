@@ -32,14 +32,15 @@ registered_channels = [
 
 ht_channels = []
 
-for device in Register.objects.all():
-    for channel in device.device.get_channles():
-        registered_channels.append( (str(channel), mqtt_qos) )
-
-print "registered_channels", registered_channels
-
 def on_connect(client, userdata, rc):
     # Subscribe to device channels
+
+    for device in Register.objects.all():
+        for channel in device.device.get_channles():
+            registered_channels.append( (str(channel), mqtt_qos) )
+
+    print "registered_channels", registered_channels
+
     result = client.subscribe(registered_channels)
 
 def on_message(client, userdata, msg):
