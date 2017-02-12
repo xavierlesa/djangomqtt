@@ -28,30 +28,3 @@
 ## Comunicación
 
 [DEVICE] -> UUID + TOKEN -> SHA -> BASE64 -> // -> BASE64 -> AUTH -> [SERVER]
-
-
-
-
-
-
-
-
-
-
-
-
-
-Contacto: pablo@redinova.com
-
-NOTAS: 
-
-Soluciones de internet de las cosas que eficientizan el consumo eléctrico, especialmente en los locales o plantas con ascensores y escaleras mecánicas.
-
-Un sensor vale 1.500 pesos o 100 dólares y el servicio para éste vale unos 225 o 15 dólares pesos por mes por unidad.
-
-"Son precios que para una industria o un local no resultan onerosos, la instalación es muy rápida y la mejora de la eficiencia se estima en un 30%", aseguró.
-
-Hacia el consumidor residencial, la previsión es ofrecer sensores al 50% del valor y un servicio que no excedería los 50 pesos mensuales.
-
-Entre otras opciones, el consumidor podría estimar el consumo eléctrico por electrodoméstico para poder establecer un uso más eficiente de cada uno de ellos.
-
