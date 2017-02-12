@@ -39,19 +39,30 @@ def on_connect(client, userdata, rc):
         for channel in device.device.get_channles():
             registered_channels.append( (str(channel), mqtt_qos) )
 
-    print "registered_channels", registered_channels
+    #print "registered_channels", registered_channels
 
     result = client.subscribe(registered_channels)
 
 def on_message(client, userdata, msg):
     print msg.topic
-    if msg.topic.split('/')[1] == 'ht':
+
+    device = msg.topic.split('/')[0]
+
+    if msg.topic == mqtt_topic:
+        # Intenta registrar el device si aun no existe.
+        try:
+            Device.objects.get(id=msg.payload)
+        except Device.DoesNotExist:
+            created = Device.objects.create(id=msg.payload, name="Device <%s>" % msg.payload, channels="ht")
+            print created
+        pass
+
+    elif msg.topic.split('/')[1] == 'ht':
         try:
             data = json.loads(msg.payload)
         except:
             print msg.payload
         else:
-            device = msg.topic.split('/')[0]
             status = DeviceStatus.objects.create(device_id=device, status=data)
             print data
             
