@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load iotdevice_tags %}
+{% block title %}Estado de fermentadores{% endblock %}
+{% block main %}
+<div class="row">
+    {% for sensor in object_list.0.status.sensors %}
+    <div class="col-md-6">
+        <h3 class="bg-info">Sensor {{ sensor.device }}:  {{ sensor.value }} ºC</h3>
+    </div>
+    {% endfor %}
+
+
+    <div class="col-md-6">
+    {% for setpoint, value in object_list.0.status.setpoints.iteritems %}
+    <p>{{ setpoint }}: {{ value }}</p>
+    {% endfor %}
+    </div>
+</div>
+
+{% comment %}
+<div class="row">
+    <div class="col-md-6">
+        <form>
+            {% for switch, value in object_list.0.status.switch.iteritems %}
+            <label class="checkbox-inline">
+                <input type="checkbox" id="id{{ switch }}" value="{{ forloop.counter }}" name="onoff"> {{ value }}
+            </label>
+            {% endfor %}
+            <button type="submit" class="btn btn-success">Setear</button>
+        </form>
+    </div>
+</div>
+{% endcomment %}
+
+<div id="container"></div>
+
+<table class="table table-striped" id="datatable">
+    <thead>
+        <th>Date</th>
+        {% for sensor in object_list.0.status.sensors %}
+        <th>Sensor {{ sensor.device }}</th>
+        {% endfor %}
+
+        {% for switch in object_list.0.status.switch.iterkeys %}
+        <th>Switch {{ switch }}</th>
+        {% endfor %}
+    </thead>
+
+    {% for p in object_list %}
+    <tr>
+        <td>{{ p.date }}</td>
+        {% for sensor in p.status.sensors %}
+        <td>{{ sensor.value|floatformat }} ºC</td>
+        {% endfor %}
+        {% for switch in p.status.switch.itervalues %}
+        <td>{{ switch }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+<script>
+Highcharts.chart('container', {
+    chart: {
+        type: 'spline'
+    },
+    title: {
+        text: 'Curva de temperatura de fermentadores'
+    },
+    yAxis: {
+        title: {
+            text: 'Temperatura (°C)'
+        }
+    },
+    xAxis: {
+        categories: [{% for i in object_list reversed %}"{{ i.date.isoformat }}"{% if not forloop.last %},{% endif %}{% endfor %}]
+    },
+    series: [{% for index in object_list.0.status.sensors %}{
+        name: "Sensor {{ forloop.counter }}",
+        data: [{% for i in object_list reversed %}{% get_serie i.status.sensors forloop.parentloop.counter0 as sensor %}{{ sensor.value|floatformat }}{% if not forloop.last %},{% endif %}{% endfor %}]
+    }{% if not forloop.last %},{% endif %}{% endfor %}]
+});
+</script>
+{% endblock %}
