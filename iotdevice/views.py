@@ -7,6 +7,7 @@ from .mqtt import client, mqtt_topic, mqtt_qos
 
 class StatusView(ListView):
     model = DeviceStatus
+    paginated_by = 60 # 5 horas en intervalos de 5 min.
 
     def get_context_data(self, **kwargs):
         context = super(StatusView, self).get_context_data(**kwargs)
