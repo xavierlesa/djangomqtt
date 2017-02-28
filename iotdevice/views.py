@@ -9,6 +9,9 @@ class StatusView(ListView):
     model = DeviceStatus
     paginate_by = 60 # 5 horas en intervalos de 5 min.
 
+    def get_paginate_by(self, queryset):
+        return self.request.GET.get('paginate_by', self.paginate_by)
+
     def get_context_data(self, **kwargs):
         context = super(StatusView, self).get_context_data(**kwargs)
         
