@@ -9,7 +9,6 @@
     </div>
     {% endfor %}
 
-
     <div class="col-md-6">
     {% for setpoint, value in object_list.0.status.setpoints.iteritems %}
     <p>{{ setpoint }}: {{ value }}</p>
@@ -17,20 +16,23 @@
     </div>
 </div>
 
-{% comment %}
 <div class="row">
     <div class="col-md-6">
         <form>
+            {% comment %}
             {% for switch, value in object_list.0.status.switch.iteritems %}
             <label class="checkbox-inline">
                 <input type="checkbox" id="id{{ switch }}" value="{{ forloop.counter }}" name="onoff"> {{ value }}
             </label>
             {% endfor %}
+            {% endcomment %}
+            <label class="checkbox-inline">
+                <input type="checkbox" id="id_autorefresh" value="5000" name="autorefresh">
+            </label>
             <button type="submit" class="btn btn-success">Setear</button>
         </form>
     </div>
 </div>
-{% endcomment %}
 
 <div id="container"></div>
 
@@ -82,5 +84,9 @@ Highcharts.chart('container', {
         data: [{% for i in object_list reversed %}{% get_serie i.status.sensors forloop.parentloop.counter0 as sensor %}{{ sensor.value|floatformat }}{% if not forloop.last %},{% endif %}{% endfor %}]
     }{% if not forloop.last %},{% endif %}{% endfor %}]
 });
+
+{% if request.GET.autorefresh %}
+setTimeout(function(){ window.location.reload() }, {{ request.GET.autorefresh|default:'5000' }});
+{% endif %}
 </script>
 {% endblock %}
