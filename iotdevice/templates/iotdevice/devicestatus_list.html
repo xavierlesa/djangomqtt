@@ -18,18 +18,28 @@
 
 <div class="row">
     <div class="col-md-6">
-        <form>
-            {% comment %}
-            {% for switch, value in object_list.0.status.switch.iteritems %}
-            <label class="checkbox-inline">
-                <input type="checkbox" id="id{{ switch }}" value="{{ forloop.counter }}" name="onoff"> {{ value }}
-            </label>
-            {% endfor %}
-            {% endcomment %}
-            <label class="checkbox-inline">
-                <input type="checkbox" id="id_autorefresh" value="5000" name="autorefresh">
-            </label>
-            <button type="submit" class="btn btn-success">Setear</button>
+        <form class="form-inline">
+            <div class="form-group">
+                <label class="sr-only" for="exampleInputAmount">Intervalo</label>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-resize-horizontal" aria-hidden="true"></span>
+                    </div>
+                    <input type="text" class="form-control" id="id_paginate_by" name="paginate_by" placeholder="Intervalo" value="{{ request.GET.paginate_by|default:'' }}">
+                    <div class="input-group-addon">X</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="exampleInputAmount">Autorefresh</label>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                    </div>
+                    <input type="text" class="form-control" id="id_autorefresh_segundos" name="autorefresh" placeholder="Segundos" value="{{ request.GET.autorefresh|default:'' }}">
+                    <div class="input-group-addon">ms</div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Autorefresh</button>
         </form>
     </div>
 </div>
