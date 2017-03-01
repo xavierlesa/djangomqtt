@@ -5,7 +5,7 @@
 <div class="row">
     {% for sensor in object_list.0.status.sensors %}
     <div class="col-md-6">
-        <h3 class="bg-info">Sensor {{ sensor.device }}:  {{ sensor.value }} ºC</h3>
+        <h3 class="bg-info">Sensor {{ sensor.device }}:  {{ sensor.value|floatformat }} ºC</h3>
         <div id="container-sensor-{{ forloop.counter }}"></div>
     </div>
     {% endfor %}
@@ -184,7 +184,7 @@ var chartSpeed = Highcharts.chart('container-sensor-{{ forloop.counter }}', High
 
     series: [{
         name: 'Temp',
-        data: [{{ sensor.value }}],
+        data: [{{ sensor.value|floatformat }}],
         dataLabels: {
             format: '<div style="text-align:center"><span style="font-size:25px;color:' +
                 ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
