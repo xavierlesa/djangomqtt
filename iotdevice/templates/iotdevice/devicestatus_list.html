@@ -167,11 +167,12 @@ var gaugeOptions = {
     }
 };
 
-// Sensor 1
-var chartSpeed = Highcharts.chart('container-sensor-1', Highcharts.merge(gaugeOptions, {
+{% for sensor in object_list.0.status.sensors %}
+// Sensor {{ forloop.counter }}
+var chartSpeed = Highcharts.chart('container-sensor-{{ forloop.counter }}', Highcharts.merge(gaugeOptions, {
     yAxis: {
         min: 0,
-        max: 200,
+        max: 35,
         title: {
             text: 'Temp'
         }
@@ -183,7 +184,7 @@ var chartSpeed = Highcharts.chart('container-sensor-1', Highcharts.merge(gaugeOp
 
     series: [{
         name: 'Temp',
-        data: [{{ object_list.0.status.sensors.0.value }}],
+        data: [{{ sensor.value }}],
         dataLabels: {
             format: '<div style="text-align:center"><span style="font-size:25px;color:' +
                 ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
@@ -195,5 +196,6 @@ var chartSpeed = Highcharts.chart('container-sensor-1', Highcharts.merge(gaugeOp
     }]
 
 }));
+{% endfor %}
 </script>
 {% endblock %}
