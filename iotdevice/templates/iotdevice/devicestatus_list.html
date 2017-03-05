@@ -51,7 +51,7 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="submit" class="btn btn-default" onclick="function(){ $('form.form').trigger('reset').find('input').val('') }">Reset</button>
+            <button type="submit" class="btn btn-default" onclick="clearForm()">Reset</button>
         </form>
     </div>
 </div>
@@ -84,6 +84,10 @@
 </table>
 
 <script>
+function clearForm(){
+    $('form.form').trigger('reset').find('input').val('');
+}
+
 Highcharts.chart('container', {
     chart: {
         type: 'spline',
