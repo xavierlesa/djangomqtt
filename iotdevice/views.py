@@ -3,7 +3,6 @@
 
 from django.views.generic import ListView
 from .models import Device, DeviceStatus
-from .mqtt import client, mqtt_topic, mqtt_qos
 
 class StatusView(ListView):
     model = DeviceStatus
@@ -18,6 +17,7 @@ class StatusView(ListView):
         onoff = self.request.GET.get('onoff')
 
         if onoff:
+            from .mqtt import client, mqtt_topic, mqtt_qos
             #negate = False
             #if onoff.startswith('!'):
             #    negate = True
