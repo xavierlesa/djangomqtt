@@ -47,7 +47,7 @@ ht_channels = []
 
 @receiver(device_registration)
 def subscribe_to_channels(sender, **kwargs):
-    for channel in sender.device.device.get_channles():
+    for channel in sender.device.get_channles():
         if (str(channel), mqtt_qos) not in registered_channels:
             registered_channels.append( (str(channel), mqtt_qos) )
 
