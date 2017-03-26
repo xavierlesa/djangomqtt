@@ -4,24 +4,36 @@
 import json
 import datetime, time
 import paho.mqtt.client as mqtt
+from django.conf import settings
+from django.dispatch import receiver
 
-from models import Device, DeviceStatus, Register
+from models import Device, DeviceStatus, Register, device_registration
 
+# mqtt config
+MQTT_BROKER_CONFIG = getattr(settings, "MQTT_BROKER_CONFIG", {
+    "HOST": "iot.foosible.com",
+    "PORT": 1883,
+    "USERNAME": "",
+    "PASSWORD": "",
+    "KEEPALIVE": 120, # 2 minutos
+    "QOS": 1,
+    "CLIENT_ID": "pyferm",
+    "TOPIC", "iferm/ht",
+})
 
-# mqtt server
-mqtt_broker_host = "iot.foosible.com"
-mqtt_broker_port = 1883
-mqtt_username = ""
-mqtt_password = ""
-mqtt_keepalive = 120 # 2 minutos
-mqtt_qos = 1
+# mqtt broker
+mqtt_broker_host = MQTT_BROKER_CONFIG.get("HOST")
+mqtt_broker_port = MQTT_BROKER_CONFIG.get("PORT")
+mqtt_username = MQTT_BROKER_CONFIG.get("USERNAME", "")
+mqtt_password = MQTT_BROKER_CONFIG.get("PASSWORD", "")
+mqtt_keepalive = MQTT_BROKER_CONFIG.get("KEEPALIVE", 120) # 2 minutos
+mqtt_qos = MQTT_BROKER_CONFIG.get("QOS", 1) # QOS True
 
 # mqtt client
-mqtt_client_id = "pyferm"
-
+mqtt_client_id = MQTT_BROKER_CONFIG.get("CLIENT_ID", "pyferm")
 
 # mqtt pub/sub config
-mqtt_topic = "iferm/ht"
+mqtt_topic = MQTT_BROKER_CONFIG.get("TOPIC", "iferm/ht")
 
 # init mqtt
 client = mqtt.Client(mqtt_client_id, mqtt_keepalive, mqtt_username, mqtt_password)
@@ -31,6 +43,17 @@ registered_channels = [
     ]
 
 ht_channels = []
+
+
+@receiver(device_registration)
+def subscribe_to_channels(sender, **kwargs):
+    for channel in sender.device.device.get_channles():
+        if (str(channel), mqtt_qos) not in registered_channels:
+            registered_channels.append( (str(channel), mqtt_qos) )
+
+    result = client.subscribe(registered_channels)
+    print result
+
 
 def on_connect(client, userdata, rc):
     # Subscribe to device channels
@@ -68,7 +91,6 @@ def on_message(client, userdata, msg):
             
     else:
         print msg.payload
-
 
 
 client.on_connect = on_connect

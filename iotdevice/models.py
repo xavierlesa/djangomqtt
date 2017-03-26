@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 import hmac
 import uuid
 
+import django.dispatch
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from hashlib import sha256
@@ -77,6 +78,13 @@ class Register(models.Model):
     def __str__(self):
         return "Register - %s" % self.device
 
+    def save(self, *args, **kwargs):
+        super(Register, self).save(*args, **kwargs)
+        
+        # Propagate signal registration
+        device_registration.send(sender=self.__class__,  device_id=self.device.id, 
+                key=self.key, token=self.get_token())
+
     def get_token(self, token):
         """
         Create a device token
@@ -96,4 +104,8 @@ class Register(models.Model):
     #    hashed = hmac.new(key, raw, sha256)
 
     #    # The signature
-    #    return hashed.digest().encode("base64").rstrip('\n')    
+    #    return hashed.digest().encode("base64").rstrip('\n')
+
+
+# Signals for auto registration
+device_registration = django.dispatch.Signal(providing_args=["device_id", "key", "token"])
