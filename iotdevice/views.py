@@ -17,7 +17,9 @@ class StatusView(ListView):
         onoff = self.request.GET.get('onoff')
 
         if onoff:
-            from .mqtt import client, mqtt_topic, mqtt_qos
+            from .mqtt import mqtt_client_id, mqtt_keepalive, mqtt_username, mqtt_password, mqtt_qos
+            # init mqtt
+            client = mqtt.Client(mqtt_client_id, mqtt_keepalive, mqtt_username, mqtt_password)
             #negate = False
             #if onoff.startswith('!'):
             #    negate = True
