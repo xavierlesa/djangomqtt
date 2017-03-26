@@ -18,7 +18,7 @@ MQTT_BROKER_CONFIG = getattr(settings, "MQTT_BROKER_CONFIG", {
     "KEEPALIVE": 120, # 2 minutos
     "QOS": 1,
     "CLIENT_ID": "pyferm",
-    "TOPIC", "iferm/ht",
+    "TOPIC": "iferm/ht",
 })
 
 # mqtt broker
