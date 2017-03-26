@@ -83,7 +83,8 @@ class Register(models.Model):
         
         # Propagate signal registration
         device_registration.send(sender=self.__class__,  device_id=self.device.id, 
-                key=self.key, token=self.get_token(''))
+                key=self.key, token=None)
+        #self.get_token('')
 
     def get_token(self, token):
         """
