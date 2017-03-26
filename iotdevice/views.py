@@ -30,8 +30,8 @@ class StatusView(ListView):
             #    'c': 4
             #}[onoff]
 
-            print("publish to 260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff\r\n%s" % onoff)
+            print("publish to 260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff => %s" % onoff)
 
-            client.publish("260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff", onoff, mqtt_qos)
+            print(client.publish("260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff", str(onoff), mqtt_qos))
 
         return context
