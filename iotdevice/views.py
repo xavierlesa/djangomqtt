@@ -20,7 +20,10 @@ class StatusView(ListView):
         if onoff:
 
             print("publish to 260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff => %s" % onoff)
-            device_publish.send("260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff", str(onoff))
+            device_publish.send(sender=self, 
+                    device_topic="260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff", 
+                    message=str(onoff)
+                    )
 
         return context
 
