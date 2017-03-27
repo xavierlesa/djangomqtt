@@ -8,6 +8,7 @@ from django.conf import settings
 from django.dispatch import receiver
 
 from models import Device, DeviceStatus, Register, device_registration
+from views import device_publish
 
 # mqtt config
 MQTT_BROKER_CONFIG = getattr(settings, "MQTT_BROKER_CONFIG", {
@@ -54,6 +55,13 @@ def subscribe_to_channels(sender, **kwargs):
             registered_channels.append( (str(channel), mqtt_qos) )
 
     result = client.subscribe(registered_channels)
+    print result
+
+
+@receiver(device_publish)
+def publish_to_device(device_topic, message, **kwargs):
+    print(device_topic, message, kwargs)
+    result = client.publish(device_topic, message)
     print result
 
 
