@@ -59,7 +59,7 @@ def subscribe_to_channels(sender, **kwargs):
 
 
 @receiver(device_publish)
-def publish_to_device(device_topic, message, **kwargs):
+def publish_to_device(sender, device_topic, message, **kwargs):
     print(device_topic, message, kwargs)
     result = client.publish(device_topic, message)
     print result
