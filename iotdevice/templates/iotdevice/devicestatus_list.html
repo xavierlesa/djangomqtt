@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load iotdevice_tags %}
+{% load tz iotdevice_tags %}
 {% block title %}Estado de fermentadores{% endblock %}
 {% block main %}
 <div class="row">
@@ -72,7 +72,7 @@
 
     {% for p in object_list %}
     <tr>
-        <td>{{ p.date }}</td>
+        <td>{{ p.date|localtime }}</td>
         {% for sensor in p.status.sensors %}
         <td>{{ sensor.value|floatformat }} ºC</td>
         {% endfor %}
@@ -102,7 +102,7 @@ Highcharts.chart('container', {
         }
     },
     xAxis: {
-        categories: [{% for i in object_list reversed %}"{{ i.date }}"{% if not forloop.last %},{% endif %}{% endfor %}],
+        categories: [{% for i in object_list reversed %}"{{ i.date|localtime }}"{% if not forloop.last %},{% endif %}{% endfor %}],
         type: 'datetime'
     },
     series: [{% for index in object_list.0.status.sensors %}{
