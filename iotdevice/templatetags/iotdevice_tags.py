@@ -8,4 +8,9 @@ register = template.Library()
 
 @register.assignment_tag
 def get_serie(data, index):
-    return data[index]
+    try:
+        serie = data[index]
+    except:
+        serie = None
+    finally:
+        return serie
