@@ -11,19 +11,10 @@
     {% endfor %}
 
     <div class="col-md-6">
-        {% comment %}
-        {% for setpoint, value in object_list.0.status.setpoints.iteritems %}
-        <p>{{ setpoint }}: {{ value }}</p>
-        {% endfor %}
-        {% endcomment %}
-
         <p><strong>SP</strong>: {{ object_list.0.status.setpoints.SP }}</p>
         <p><strong>P</strong>: {{ object_list.0.status.setpoints.P }}</p>
         <p><strong>I</strong>: {{ object_list.0.status.setpoints.I }}</p>
         <p><strong>D</strong>: {{ object_list.0.status.setpoints.D }}</p>
-        <p><strong>High</strong>: {{ object_list.0.status.setpoints.high }}</p>
-        <p><strong>Low</strong>: {{ object_list.0.status.setpoints.low }}</p>
-        <p><strong>Delta</strong>: {{ object_list.0.status.setpoints.delta }}</p>
     </div>
 </div>
 
@@ -72,7 +63,7 @@
 
     {% for p in object_list %}
     <tr>
-        <td>{{ p.date|utc }}</td>
+        <td>{{ p.date }}</td>
         {% for sensor in p.status.sensors %}
         <td>{{ sensor.value|floatformat }} ºC</td>
         {% endfor %}
