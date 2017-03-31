@@ -114,6 +114,8 @@ def get_or_create_device(sender, device_id, name, channels="ht", **kwargs):
     except Device.DoesNotExist:
         created = Device.objects.create(id=device_id, name=name, channels=channels)
         print created
+    except Exception, E:
+        print str(E)
     pass
 
 
