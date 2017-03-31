@@ -103,4 +103,4 @@ client.on_message = on_message
 # connect
 client.connect(mqtt_broker_host, mqtt_broker_port, mqtt_keepalive)
 
-#client.loop_start()
+client.loop_start()
