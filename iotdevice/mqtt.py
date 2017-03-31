@@ -7,8 +7,7 @@ import paho.mqtt.client as mqtt
 from django.conf import settings
 from django.dispatch import receiver
 
-from models import Device, DeviceStatus, Register, device_registration
-from views import device_publish
+from .signals import device_registration_signal, device_create_signal, device_publish_signal, device_status_signal
 
 # mqtt config
 MQTT_BROKER_CONFIG = getattr(settings, "MQTT_BROKER_CONFIG", {
@@ -46,7 +45,7 @@ registered_channels = [
 ht_channels = []
 
 
-@receiver(device_registration)
+@receiver(device_registration_signal)
 def subscribe_to_channels(sender, **kwargs):
     print("subscribe_to_channels signal called with:\r\n%s" % kwargs)
 
@@ -58,7 +57,7 @@ def subscribe_to_channels(sender, **kwargs):
     print result
 
 
-@receiver(device_publish)
+@receiver(device_publish_signal)
 def publish_to_device(sender, device_topic, message, **kwargs):
     print(device_topic, message, kwargs)
     result = client.publish(device_topic, message)
@@ -67,6 +66,7 @@ def publish_to_device(sender, device_topic, message, **kwargs):
 
 def on_connect(client, userdata, rc):
     # Subscribe to device channels
+    from models import Register
 
     for device in Register.objects.all():
         for channel in device.device.get_channles():
@@ -83,12 +83,7 @@ def on_message(client, userdata, msg):
 
     if msg.topic == mqtt_topic:
         # Intenta registrar el device si aun no existe.
-        try:
-            Device.objects.get(id=msg.payload)
-        except Device.DoesNotExist:
-            created = Device.objects.create(id=msg.payload, name="Device <%s>" % msg.payload, channels="ht")
-            print created
-        pass
+        device_create_signal.send(sender=client, device_id=msg.topic, name="<Device %s>" % msg.topic)
 
     elif msg.topic.split('/')[1] == 'ht':
         try:
@@ -96,8 +91,7 @@ def on_message(client, userdata, msg):
         except:
             print msg.payload
         else:
-            status = DeviceStatus.objects.create(device_id=device, status=data)
-            print data
+            device_status_signal.send(sender=client, device_id=device, status=data)
             
     else:
         print msg.payload

@@ -6,12 +6,12 @@ from __future__ import unicode_literals
 import hmac
 import uuid
 
-import django.dispatch
 from django.db import models
+from django.dispatch import receiver
 from django.utils.encoding import python_2_unicode_compatible
 from hashlib import sha256
-
 from jsonfield import JSONField
+from .signals import device_registration_signal, device_create_signal, device_status_signal
 
 ################################################################################
 # Workflow for register a device
@@ -107,6 +107,16 @@ class Register(models.Model):
     #    # The signature
     #    return hashed.digest().encode("base64").rstrip('\n')
 
+@receiver(device_create_signal)
+def get_or_create_device(sender, device_id, name, channels="ht", **kwargs):
+    try:
+        Device.objects.get(id=device_id)
+    except Device.DoesNotExist:
+        created = Device.objects.create(id=device_id, name=name, channels=channels)
+        print created
+    pass
 
-# Signals for auto registration
-device_registration = django.dispatch.Signal(providing_args=["device_id", "key", "token"])
+
+@receiver(device_status_signal)
+def update_status_device(sender, device_id, status, **kwargs):
+    DeviceStatus.objects.create(device_id=device_id, status=status)

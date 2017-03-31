@@ -3,7 +3,8 @@
 
 import django.dispatch
 from django.views.generic import ListView
-from .models import Device, DeviceStatus
+from .models import DeviceStatus
+from .signals import device_publish_signal
 
 class StatusView(ListView):
     model = DeviceStatus
@@ -20,14 +21,9 @@ class StatusView(ListView):
         if onoff:
 
             print("publish to 260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff => %s" % onoff)
-            device_publish.send(sender=self, 
+            device_publish_signal.send(sender=self, 
                     device_topic="260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff", 
                     message=str(onoff)
                     )
 
         return context
-
-
-
-# Signals for publish to device
-device_publish = django.dispatch.Signal(providing_args=["device_topic", "message"])
