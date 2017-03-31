@@ -83,7 +83,7 @@ def on_message(client, userdata, msg):
 
     if msg.topic == mqtt_topic:
         # Intenta registrar el device si aun no existe.
-        device_create_signal.send(sender=client, device_id=msg.topic, name="<Device %s>" % msg.topic)
+        device_create_signal.send(sender=client, device_id=device, name="<Device %s>" % device)
 
     elif msg.topic.split('/')[1] == 'ht':
         try:
