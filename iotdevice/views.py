@@ -4,7 +4,6 @@
 import django.dispatch
 from django.views.generic import ListView
 from .models import Device, DeviceStatus
-import mqtt.client
 
 class StatusView(ListView):
     model = DeviceStatus
@@ -21,15 +20,10 @@ class StatusView(ListView):
         if onoff:
 
             print("publish to 260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff => %s" % onoff)
-            #device_publish.send(sender=self, 
-            #        device_topic="260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff", 
-            #        message=str(onoff)
-            #        )
-                
-            device_topic="260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff"
-            message=str(onoff)
-            result = mqtt.client.publish(device_topic, message)
-            print result
+            device_publish.send(sender=self, 
+                    device_topic="260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff", 
+                    message=str(onoff)
+                    )
 
         return context
 
