@@ -61,7 +61,6 @@ def subscribe_to_channels(sender, **kwargs):
 def publish_to_device(sender, device_topic, message, **kwargs):
     print(device_topic, message, kwargs)
     result = client.publish(device_topic, message)
-    print result
 
 
 def on_connect(client, userdata, rc):

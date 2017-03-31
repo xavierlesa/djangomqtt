@@ -8,7 +8,7 @@ from .signals import device_publish_signal
 
 class StatusView(ListView):
     model = DeviceStatus
-    paginate_by = 60 # 5 horas en intervalos de 5 min.
+    paginate_by = 12 # 5 horas en intervalos de 5 min.
 
     def get_paginate_by(self, queryset):
         return self.request.GET.get('paginate_by', self.paginate_by) or self.paginate_by
