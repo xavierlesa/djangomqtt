@@ -10,11 +10,19 @@
     </div>
     {% endfor %}
 
-    <div class="col-md-6">
-        <p><strong>SP</strong>: {{ object_list.0.status.setpoints.SP }}</p>
-        <p><strong>P</strong>: {{ object_list.0.status.setpoints.P }}</p>
-        <p><strong>I</strong>: {{ object_list.0.status.setpoints.I }}</p>
-        <p><strong>D</strong>: {{ object_list.0.status.setpoints.D }}</p>
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">PID</h3>
+            </div>
+            <div class="panel-body">
+
+                <h1>Set Point <span class="label label-info">{{ pid.status.setpoints.SP }}</span></h1>
+                <h3>P <span class="label label-default">{{ pid.status.setpoints.P }}</span></h3>
+                <h3>I <span class="label label-default">{{ pid.status.setpoints.I }}</span></h3>
+                <h3>D <span class="label label-default">{{ pid.status.setpoints.D }}</span></h3>
+            </div>
+        </div>
     </div>
 </div>
 
