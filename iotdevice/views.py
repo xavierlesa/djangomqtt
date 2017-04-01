@@ -15,7 +15,7 @@ class StatusView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(StatusView, self).get_context_data(**kwargs)
-        context.update({'pid': DeviceStatus.objects.filter(channel='pid').last()})
+        context.update({'pid': DeviceStatus.objects.filter(channel='pid').first()}) #first porque esta como -date
         
         onoff = self.request.GET.get('onoff')
 
