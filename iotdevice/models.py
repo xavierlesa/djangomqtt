@@ -82,7 +82,7 @@ class Register(models.Model):
         super(Register, self).save(*args, **kwargs)
         
         # Propagate signal registration
-        device_registration.send(sender=self,  device_id=self.device.id, 
+        device_registration_signal.send(sender=self,  device_id=self.device.id, 
                 key=self.key, token=None)
         #self.get_token('')
 
@@ -115,7 +115,7 @@ def get_or_create_device(sender, device_id, name, channels="ht", **kwargs):
         created = Device.objects.create(id=device_id, name=name, channels=channels)
         print created
     except Exception, E:
-        print str(E)
+        print "get_or_create_device error: %s\r\n%s" % (str(E), device_id)
     pass
 
 

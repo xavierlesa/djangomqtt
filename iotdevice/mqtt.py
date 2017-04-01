@@ -3,6 +3,7 @@
 
 import json
 import datetime, time
+from uuid import UUID
 import paho.mqtt.client as mqtt
 from django.conf import settings
 from django.dispatch import receiver
@@ -54,12 +55,12 @@ def subscribe_to_channels(sender, **kwargs):
             registered_channels.append( (str(channel), mqtt_qos) )
 
     result = client.subscribe(registered_channels)
-    print result
+    print "suscribed %s" % result
 
 
 @receiver(device_publish_signal)
 def publish_to_device(sender, device_topic, message, **kwargs):
-    print(device_topic, message, kwargs)
+    print("Publish to %s\r\n%s" % (device_topic, message), kwargs)
     result = client.publish(device_topic, message)
 
 
@@ -76,24 +77,31 @@ def on_connect(client, userdata, rc):
     result = client.subscribe(registered_channels)
 
 def on_message(client, userdata, msg):
-    print msg.topic
 
     device = msg.topic.split('/')[0]
 
-    if msg.topic == mqtt_topic:
+    if msg.topic == mqtt_topic and not device == 'iferm':
         # Intenta registrar el device si aun no existe.
-        device_create_signal.send(sender=client, device_id=device, name="<Device %s>" % device)
+        print("Intenta registrar el device si aun no existe. \r\n%s" % msg.__dict__)
+        try:
+            UUID(device, version=4)
+        except:
+            print("No es un device registrable %s" % device)
+        else:
+            print("device_create_signal called!!\r\n%s" % device)
+            device_create_signal.send(sender=client, device_id=device, name="<Device %s>" % device)
 
     elif msg.topic.split('/')[1] == 'ht':
         try:
             data = json.loads(msg.payload)
         except:
-            print msg.payload
+            print "topic ht data payload\r\n%s" % msg.payload
         else:
+            print("device_status_signal called!!\r\n%s, %s" % (device, data))
             device_status_signal.send(sender=client, device_id=device, status=data)
             
     else:
-        print msg.payload
+        print "data payload\r\n%s" % msg.payload
 
 
 client.on_connect = on_connect
