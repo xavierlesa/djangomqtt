@@ -2,5 +2,5 @@
 # -*- coding:utf-8 -*-
 
 from .signals import *
-from .mqtt import client
-client.loop_start()
+#from .mqtt import client
+#client.loop_start()
