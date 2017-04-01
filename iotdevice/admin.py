@@ -11,7 +11,10 @@ class DeviceAdmin(admin.ModelAdmin):
 
 
 class DeviceStatusAdmin(admin.ModelAdmin):
-    list_display = ['date', 'device', 'status']
+    list_display = ['date', 'device', 'status', 'channel']
+    list_filter = ['channel']
+    date_hierarchy = 'date'
+    
 
 admin.site.register(Device, DeviceAdmin)
 admin.site.register(DeviceStatus, DeviceStatusAdmin)
