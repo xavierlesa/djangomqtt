@@ -13,14 +13,14 @@
     <div class="col-md-3">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">PID</h3>
+                <h1 class="panel-title">PID</h1>
             </div>
             <div class="panel-body">
-
-                <h1>Set Point <span class="label label-info">{{ pid.status.setpoints.SP }}</span></h1>
+                <h2>SP <span class="label label-info">{{ pid.status.setpoints.SP }}</span></h2>
                 <h3>P <span class="label label-default">{{ pid.status.setpoints.P }}</span></h3>
                 <h3>I <span class="label label-default">{{ pid.status.setpoints.I }}</span></h3>
                 <h3>D <span class="label label-default">{{ pid.status.setpoints.D }}</span></h3>
+                {{ pid }}
             </div>
         </div>
     </div>
