@@ -61,7 +61,10 @@ def subscribe_to_channels(sender, **kwargs):
 @receiver(device_publish_signal)
 def publish_to_device(sender, device_topic, message, **kwargs):
     print("Publish to %s\r\n%s" % (device_topic, message), kwargs)
-    result = client.publish(device_topic, message)
+    from paho.mqtt.publish import single
+    single(device_topic, payload=message, qos=mqtt_qos, hostname=mqtt_broker_host,
+    port=mqtt_broker_port, client_id=mqtt_client_id, keepalive=mqtt_keepalive)
+
 
 
 def on_connect(client, userdata, rc):
