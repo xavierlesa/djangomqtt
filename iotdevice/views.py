@@ -7,7 +7,7 @@ from .models import DeviceStatus
 from .signals import device_publish_signal
 
 class StatusView(ListView):
-    model = DeviceStatus
+    queryset = DeviceStatus.objects.filter(channel='ht')
     paginate_by = 12 # 5 horas en intervalos de 5 min.
 
     def get_paginate_by(self, queryset):
@@ -15,6 +15,7 @@ class StatusView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(StatusView, self).get_context_data(**kwargs)
+        context.update({'pid': DeviceStatus.objects.filter(channel='pid').last()})
         
         onoff = self.request.GET.get('onoff')
 

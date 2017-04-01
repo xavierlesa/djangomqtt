@@ -54,6 +54,7 @@ class DeviceStatus(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     status = JSONField()
     device = models.ForeignKey(Device)
+    channel = models.CharField(max_length=100)
 
     class Meta:
         ordering = ['-date']
@@ -120,5 +121,5 @@ def get_or_create_device(sender, device_id, name, channels="ht", **kwargs):
 
 
 @receiver(device_status_signal)
-def update_status_device(sender, device_id, status, **kwargs):
-    DeviceStatus.objects.create(device_id=device_id, status=status)
+def update_status_device(sender, device_id, status, channel, **kwargs):
+    DeviceStatus.objects.create(device_id=device_id, status=status, channel=channel)

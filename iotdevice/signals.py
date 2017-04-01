@@ -10,7 +10,7 @@ device_registration_signal = django.dispatch.Signal(providing_args=["device_id",
 device_create_signal = django.dispatch.Signal(providing_args=["device_id", "name", "channles"])
 
 # Signals status
-device_status_signal = django.dispatch.Signal(providing_args=["device_id", "status"])
+device_status_signal = django.dispatch.Signal(providing_args=["device_id", "status", "channel"])
 
 # Signals for publish to device
 device_publish_signal = django.dispatch.Signal(providing_args=["device_topic", "message"])

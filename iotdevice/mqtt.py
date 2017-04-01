@@ -94,14 +94,15 @@ def on_message(client, userdata, msg):
             print("device_create_signal called!!\r\n%s" % device)
             device_create_signal.send(sender=client, device_id=device, name="<Device %s>" % device)
 
-    elif msg.topic.split('/')[1] == 'ht':
+    #elif msg.topic.split('/')[1] == 'ht':
+    elif msg.topic.split('/')[1]:
         try:
             data = json.loads(msg.payload)
         except:
             print "topic ht data payload\r\n%s" % msg.payload
         else:
             print("device_status_signal called!!\r\n%s, %s" % (device, data))
-            device_status_signal.send(sender=client, device_id=device, status=data)
+            device_status_signal.send(sender=client, device_id=device, status=data, channel=msg.topic.split('/')[1])
             
     else:
         print "data payload\r\n%s" % msg.payload
