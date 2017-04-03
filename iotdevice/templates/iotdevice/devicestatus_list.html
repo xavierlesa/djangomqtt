@@ -40,23 +40,23 @@
 
                 <hr />
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-xs-4">
                         <span class="label label-primary">P: {{ pid.status.setpoints.P }}</span>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-xs-4">
                         <span class="label label-primary">I: {{ pid.status.setpoints.I }}</span>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-xs-4">
                         <span class="label label-primary">D: {{ pid.status.setpoints.D }}</span>
                     </div>
                 </div>
             </div>            
             <div class="panel-footer">
                 <div class="row text-center">
-                    <div class="col-md-6 {% if pid.status.reles.0.status == "1" %}text-warning{% endif %}">
+                    <div class="col-xs-6 {% if pid.status.reles.0.status == "1" %}text-warning{% endif %}">
                         <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> {% if pid.status.reles.0.status == "1" %}<strong>H</strong>{% else %}H{% endif %}
                     </div>
-                    <div class="col-md-6 {% if pid.status.reles.1.status == "1" %}text-success{% endif %}">
+                    <div class="col-xs-6 {% if pid.status.reles.1.status == "1" %}text-success{% endif %}">
                         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> {% if pid.status.reles.0.status == "1" %}<strong>P</strong>{% else %}P{% endif %}
                     </div>
                 </div>
