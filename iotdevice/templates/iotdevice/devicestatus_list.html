@@ -28,15 +28,25 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h1 class="panel-title"><span class="glyphicon glyphicon-link"></span> PID</h1>
+                <h1 class="panel-title"><span class="glyphicon glyphicon-link"></span> PID/Etapa/Fermentador</h1>
             </div>
             <div class="panel-body text-center">
                 <h1>
                     <span class="glyphicon glyphicon-tint" aria-hidden="true"></span> {{ pid.status.sensors.0.value|floatformat }} ºC
                 </h1>
-                <h4 class="text-muted">
-                    <span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span> {{ pid.status.setpoints.SP }} ºC
-                </h4>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h4 class="text-muted">
+                            <span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span> {{ pid.status.setpoints.SP|floatformat }} ºC
+                        </h4>
+                    </div>
+                    <div class="col-xs-6">
+                        <h4 class="text-muted">
+                            <span class="glyphicon glyphicon-time" aria-hidden="true"></span> 70:33
+                        </h4>
+                    </div>
+                </div>
 
                 <hr />
                 <div class="row">
@@ -53,11 +63,14 @@
             </div>            
             <div class="panel-footer">
                 <div class="row text-center">
-                    <div class="col-xs-6 {% if pid.status.reles.0.status == "1" %}text-warning{% endif %}">
-                        <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> {% if pid.status.reles.0.status == "1" %}<strong>H</strong>{% else %}H{% endif %}
+                    <div class="col-xs-4 {% if pid.status.reles.0.status == "1" %}text-warning{% endif %}">
+                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-flash" aria-hidden="true"></span> {% if pid.status.reles.0.status == "1" %}<strong>H</strong>{% else %}H{% endif %}</button>
                     </div>
-                    <div class="col-xs-6 {% if pid.status.reles.1.status == "1" %}text-success{% endif %}">
-                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> {% if pid.status.reles.0.status == "1" %}<strong>P</strong>{% else %}P{% endif %}
+                    <div class="col-xs-4 {% if pid.status.reles.1.status == "1" %}text-success{% endif %}">
+                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> {% if pid.status.reles.0.status == "1" %}<strong>P</strong>{% else %}P{% endif %}</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></button>
                     </div>
                 </div>
             </div>
