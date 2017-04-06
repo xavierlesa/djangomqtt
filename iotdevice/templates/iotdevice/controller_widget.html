@@ -36,8 +36,26 @@
                 <button class="btn btn-danger btn-block" type="button"><!--span class="glyphicon glyphicon-stop" aria-hidden="true"></span-->STOP</button>
             </div>
             <div class="col-xs-6">
-                <button class="btn btn-default btn-block" type="button"><!--span class="glyphicon glyphicon-cog" aria-hidden="true"></span-->Config.</button>
+                <button class="btn btn-default btn-block" type="button" data-toggle="collapse" data-target="#set-n" aria-expanded="false" aria-controls="set-n"><!--span class="glyphicon glyphicon-cog" aria-hidden="true"></span-->SET</button>
             </div>
         </div>
     </div>
+</div>
+
+<div class="collapse" id="set-n">
+  <div class="well">
+        <form class="form">
+            <div class="form-group">
+                <label for="setPointInput">Set Point (SP)</label>
+                <input type="number" class="form-control" id="setPointInput" name="set_point" placeholder="SP" value="00.00">
+            </div>
+            <div class="form-group">
+                <label for="timeInput">Time</label>
+                <input type="time" class="form-control" id="timeInput" name="time" placeholder="Time" value="00:00">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-default" onclick="clearForm()">Reset</button>
+        </form>
+  </div>
 </div>
