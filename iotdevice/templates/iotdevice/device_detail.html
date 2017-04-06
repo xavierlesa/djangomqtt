@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load tz iotdevice_tags %}
+{% block title %}Estado de fermentadores{% endblock %}
+{% block main %}
+<br />
+<div class="row">
+    <div class="col-md-3">
+
+        {% include 'iotdevice/controller_widget.html' %}
+
+    </div>
+</div>
+{% endblock %}

@@ -2,9 +2,15 @@
 # -*- coding:utf-8 -*-
 
 import django.dispatch
-from django.views.generic import ListView
-from .models import DeviceStatus
+from django.views.generic import ListView, DetailView
+from .models import DeviceStatus, Device
 from .signals import device_publish_signal
+
+
+
+class PIDAutoView(DetailView):
+    model = Device
+
 
 class StatusView(ListView):
     queryset = DeviceStatus.objects.filter(channel='ht')
