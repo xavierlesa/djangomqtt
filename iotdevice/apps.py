@@ -8,5 +8,9 @@ class IotdeviceConfig(AppConfig):
 
     def ready(self):
         print "All is ready!"
-        from . import mqtt
-        mqtt.client.loop_start()
+        
+        from django.conf import settings
+
+        if not settings.DEBUG:
+            from . import mqtt
+            mqtt.client.loop_start()
