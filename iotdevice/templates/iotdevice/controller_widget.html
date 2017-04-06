@@ -1,54 +1,42 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h1 class="panel-title"><span class="glyphicon glyphicon-link"></span> PID/Etapa/Fermentador</h1>
+        <h1 class="panel-title"><!--span class="glyphicon glyphicon-link"></span-->PID/Etapa/Fermentador</h1>
     </div>
     <div class="panel-body text-center">
         <h1>
-            <span class="glyphicon glyphicon-tint" aria-hidden="true"></span> {{ pid.status.sensors.0.value|floatformat|default:'00.00' }} ºC
+            <!--span class="glyphicon glyphicon-tint" aria-hidden="true"></span-->Temp: {{ pid.status.sensors.0.value|floatformat|default:'00.00' }} ºC
         </h1>
 
         <div class="row">
             <div class="col-xs-6">
                 <h4 class="text-muted">
-                    <span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span> {{ pid.status.setpoints.SP|floatformat|default:'00.00' }} ºC
+                    <!--span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span-->SP: {{ pid.status.setpoints.SP|floatformat|default:'00.00' }} ºC
                 </h4>
             </div>
             <div class="col-xs-6">
                 <h4 class="text-muted">
-                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span> 70:33
+                    <!--span class="glyphicon glyphicon-time" aria-hidden="true"></span-->Tiempo: 70:33
                 </h4>
             </div>
         </div>
 
-        {% comment %}
-        <hr />
-        <div class="row">
-            <div class="col-xs-4">
-                <span class="label label-primary">P: {{ pid.status.setpoints.P }}</span>
-            </div>
-            <div class="col-xs-4">
-                <span class="label label-primary">I: {{ pid.status.setpoints.I }}</span>
-            </div>
-            <div class="col-xs-4">
-                <span class="label label-primary">D: {{ pid.status.setpoints.D }}</span>
-            </div>
-        </div>
-        {% endcomment %}
     </div>            
     <div class="panel-footer">
         <div class="row text-center">
+            {% comment %}
             <div class="col-xs-3 {% if pid.status.reles.0.status == "1" %}text-warning{% endif %}">
                 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-flash" aria-hidden="true"></span> {% if pid.status.reles.0.status == "1" %}<strong>H</strong>{% else %}H{% endif %}</button>
             </div>
             <div class="col-xs-3 {% if pid.status.reles.1.status == "1" %}text-success{% endif %}">
                 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> {% if pid.status.reles.0.status == "1" %}<strong>P</strong>{% else %}P{% endif %}</button>
             </div>
-            <div class="col-xs-3">
-                <button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span></button>
+            {% endcomment %}
+            <div class="col-xs-6">
+                <button class="btn btn-danger" type="button"><!--span class="glyphicon glyphicon-stop" aria-hidden="true"></span-->STOP</button>
             </div>
-            <div class="col-xs-3">
-                <button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></button>
+            <div class="col-xs-6">
+                <button class="btn btn-default" type="button"><!--span class="glyphicon glyphicon-cog" aria-hidden="true"></span-->Config.</button>
             </div>
         </div>
     </div>
