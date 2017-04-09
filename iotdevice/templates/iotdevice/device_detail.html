@@ -29,6 +29,7 @@
     $("form.form").on("submit", function(event) {
         event.preventDefault();
 
+        var $form = $(this);
         var xhr = $.ajax({
             type: 'POST',
             url: '?format=json',
