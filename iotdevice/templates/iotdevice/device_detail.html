@@ -24,6 +24,24 @@
             $("[data-current_time]").text(t);
         });
     }
+
+
+    $("form.form").on("submit", function(event) {
+        event.preventDefault();
+
+        var xhr = $.ajax({
+            type: 'POST',
+            url: '?format=json',
+            data: $form.serialize(),
+            dataType: 'json',
+            global: false,
+            beforeSend: function(jqXHR){
+                console.log('loading...');
+            }
+        });
+
+        return false;
+    });
     
     var i = setInterval(fullStatus, 5000);
 </script>
