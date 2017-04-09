@@ -3,6 +3,8 @@
 
 import django.dispatch
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView
 from .models import DeviceStatus, Device
 from .signals import device_publish_signal
@@ -42,6 +44,10 @@ class PIDAutoView(JSONResponseMixin, DetailView):
             return self.render_to_json_response(data)
         else:
             return super(PIDAutoView, self).render_to_response(context)
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        super(PIDAutoView, self).dispatch(*args, **kwargs)
 
 
 class StatusView(ListView):
