@@ -5,18 +5,18 @@
     </div>
     <div class="panel-body text-center">
         <h1>
-            <!--span class="glyphicon glyphicon-tint" aria-hidden="true"></span-->{{ pid.status.sensors.0.value|floatformat|default:'00.00' }} ºC
+            <!--span class="glyphicon glyphicon-tint" aria-hidden="true"></span--><span data-current_temp>{{ pid.status.sensors.0.value|floatformat|default:'00.00' }}</span> ºC
         </h1>
 
         <div class="row">
             <div class="col-xs-6">
                 <h4 class="text-muted">
-                    <!--span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span-->SP: {{ pid.status.setpoints.SP|floatformat|default:'00.00' }} ºC
+                    <!--span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span-->SP: <span data-set_point>{{ pid.status.setpoints.SP|floatformat|default:'00.00' }}</span> ºC
                 </h4>
             </div>
             <div class="col-xs-6">
                 <h4 class="text-muted">
-                    <!--span class="glyphicon glyphicon-time" aria-hidden="true"></span-->Tiempo: 70:33
+                    <!--span class="glyphicon glyphicon-time" aria-hidden="true"></span-->Tiempo: <span data-current_time>70:33</span>
                 </h4>
             </div>
         </div>

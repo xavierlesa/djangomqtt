@@ -5,9 +5,26 @@
 <br />
 <div class="row">
     <div class="col-xs-12">
-
         {% include 'iotdevice/controller_widget.html' %}
-
     </div>
 </div>
+{% endblock %}
+{% block custom_scripts %}
+<script>
+
+    function fullStatus() {
+        $.getJSON('?format=json', function(response) {
+            console.log(response);
+            var temp = response.pid.sensors[0].value;
+            var sp = response.setpoints.SP;
+            var t = response.pid_time;
+
+            $("[data-current_temp]").val(temp);
+            $("[data-set_point]").val(sp);
+            $("[data-current_time]").val(t);
+        });
+    }
+    
+    var i = setIterval(fullStatus, 5000);
+</script>
 {% endblock %}
