@@ -58,7 +58,7 @@ class PIDAutoView(JSONResponseMixin, DetailView):
                 message=str("PIDOFF")
             )
 
-        elif ['set_point', 'time'] in params.keys():
+        elif 'set_point' in params.keys() and 'time' in params.keys():
 
             params.update({'P': params.get('P')})
             params.update({'I': params.get('I')})

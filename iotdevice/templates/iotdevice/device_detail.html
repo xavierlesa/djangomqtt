@@ -59,6 +59,9 @@
         return false;
     });
     
+
+    $("[data-stop_pid").on('click', stopPid);
+
     var i = setInterval(fullStatus, 5000);
 </script>
 {% endblock %}
