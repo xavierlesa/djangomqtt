@@ -53,7 +53,7 @@ class PIDAutoView(JSONResponseMixin, DetailView):
         params = request.POST.copy()
         
         if params.get('pid') == 'stop':
-            device_publish_signal.send(sender=self, 
+            publish_message( 
                 device_topic="260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff", 
                 message=str("PIDOFF")
             )
@@ -66,7 +66,7 @@ class PIDAutoView(JSONResponseMixin, DetailView):
 
             print("publish to 260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff => %s" % params)
             msg = "SP:%(set_point)s&P=%(P)s&I=%(I)s&D=%(D)s&t=%(time)s" % params
-            device_publish_signal.send(sender=self, 
+            publish_message(
                 device_topic="260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff", 
                 message=str(msg)
             )
@@ -89,9 +89,16 @@ class StatusView(ListView):
         if onoff:
 
             print("publish to 260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff => %s" % onoff)
-            device_publish_signal.send(sender=self, 
-                    device_topic="260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff", 
-                    message=str(onoff)
-                    )
+            publish_message(
+                device_topic="260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff", 
+                message=str(onoff)
+            )
 
         return context
+
+
+from .mqtt import mqtt_qos, mqtt_broker_host, mqtt_broker_port, mqtt_client_id, mqtt_keepalive
+from paho.mqtt.publish import single
+def publish_message(device_topic, message):
+    single(device_topic, payload=message, qos=mqtt_qos, hostname=mqtt_broker_host,
+            port=mqtt_broker_port, client_id=mqtt_client_id, keepalive=mqtt_keepalive)
