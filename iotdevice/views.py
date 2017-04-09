@@ -41,7 +41,7 @@ class PIDAutoView(JSONResponseMixin, DetailView):
             data = {'pid': DeviceStatus.objects.filter(channel='pid').first().status} #first porque esta como -date
             return self.render_to_json_response(data)
         else:
-            return super(PIDAUtoView, self).render_to_response(context)
+            return super(PIDAutoView, self).render_to_response(context)
 
 
 class StatusView(ListView):
