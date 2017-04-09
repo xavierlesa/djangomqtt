@@ -37,6 +37,11 @@ class JSONResponseMixin(object):
 class PIDAutoView(JSONResponseMixin, DetailView):
     model = Device
 
+    def get_context_data(self, **kwargs):
+        context = super(PIDAutoView, self).get_context_data(**kwargs)
+        context.update({'pid': DeviceStatus.objects.filter(channel='pid').first()}) #first porque esta como -date
+        return context
+
     def render_to_response(self, context):
         # Look for a 'format=json' GET argument
         if self.request.GET.get('format') == 'json':
