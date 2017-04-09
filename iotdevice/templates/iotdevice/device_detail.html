@@ -19,9 +19,9 @@
             var sp = response.pid.setpoints.SP;
             var t = response.pid.pid_time;
 
-            $("[data-current_temp]").val(temp);
-            $("[data-set_point]").val(sp);
-            $("[data-current_time]").val(t);
+            $("[data-current_temp]").text(temp);
+            $("[data-set_point]").text(sp);
+            $("[data-current_time]").text(t);
         });
     }
     
