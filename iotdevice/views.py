@@ -36,7 +36,6 @@ class JSONResponseMixin(object):
 
 class PIDAutoView(JSONResponseMixin, DetailView):
     model = Device
-    allowed_methods = ['GET', 'POST']
 
     def render_to_response(self, context):
         # Look for a 'format=json' GET argument
@@ -49,6 +48,9 @@ class PIDAutoView(JSONResponseMixin, DetailView):
     @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
         return super(PIDAutoView, self).dispatch(*args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.render_to_response({})
 
 
 class StatusView(ListView):
