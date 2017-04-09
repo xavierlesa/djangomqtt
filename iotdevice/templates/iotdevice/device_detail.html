@@ -58,9 +58,10 @@
         $("#set-n").collapse('hide');
         return false;
     });
-    
 
-    $("[data-stop_pid").on('click', stopPid);
+    $("[data-stop_pid]").on('click', function(){ 
+        stopPid();
+    });
 
     var i = setInterval(fullStatus, 5000);
 </script>
