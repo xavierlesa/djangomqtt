@@ -17,11 +17,13 @@
             console.log(response);
             var temp = response.pid.sensors[0].value;
             var sp = response.pid.setpoints.SP;
-            var t = response.pid.pid_time || '--:--';
+            var ct = response.pid.pid_time || '--:--';
+            var st = response.pid.pid_settime || '--:--';
 
             $("[data-current_temp]").text(temp);
             $("[data-set_point]").text(sp);
-            $("[data-current_time]").text(t);
+            $("[data-current_time]").text(ct);
+            $("[data-set_time]").text(st);
         });
     }
 
