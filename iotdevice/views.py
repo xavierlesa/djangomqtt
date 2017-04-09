@@ -52,6 +52,7 @@ class PIDAutoView(JSONResponseMixin, DetailView):
     def post(self, request, *args, **kwargs):
         params = request.POST
         print("publish to 260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff => %s" % params)
+        #msg = "SP:%(set_point)s&P=%(P)s&I=%(I)s&D=%(D)s&t=%(time)s" % params
         #device_publish_signal.send(sender=self, 
         #        device_topic="260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff", 
         #        message=str(onoff)

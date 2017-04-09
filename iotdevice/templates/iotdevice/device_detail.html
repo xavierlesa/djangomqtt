@@ -27,6 +27,18 @@
         });
     }
 
+    function stopPid() {
+        var xhr = $.ajax({
+            type: 'POST',
+            url: '?format=json',
+            data: {'pid': 'stop'},
+            dataType: 'json',
+            global: false,
+            beforeSend: function(jqXHR){
+                console.log('loading...');
+            }
+        });
+    }
 
     $("form.form").on("submit", function(event) {
         event.preventDefault();
