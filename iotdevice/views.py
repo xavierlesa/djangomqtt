@@ -47,7 +47,7 @@ class PIDAutoView(JSONResponseMixin, DetailView):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
-        super(PIDAutoView, self).dispatch(*args, **kwargs)
+        return super(PIDAutoView, self).dispatch(*args, **kwargs)
 
 
 class StatusView(ListView):
