@@ -2,14 +2,46 @@
 # -*- coding:utf-8 -*-
 
 import django.dispatch
+from django.http import JsonResponse
 from django.views.generic import ListView, DetailView
 from .models import DeviceStatus, Device
 from .signals import device_publish_signal
 
 
+class JSONResponseMixin(object):
+    """
+    A mixin that can be used to render a JSON response.
+    """
+    def render_to_json_response(self, context, **response_kwargs):
+        """
+        Returns a JSON response, transforming 'context' to make the payload.
+        """
+        return JsonResponse(
+            self.get_data(context),
+            **response_kwargs
+        )
 
-class PIDAutoView(DetailView):
+    def get_data(self, context):
+        """
+        Returns an object that will be serialized as JSON by json.dumps().
+        """
+        # Note: This is *EXTREMELY* naive; in reality, you'll need
+        # to do much more complex handling to ensure that arbitrary
+        # objects -- such as Django model instances or querysets
+        # -- can be serialized as JSON.
+        return context
+
+
+class PIDAutoView(JSONResponseMixin, DetailView):
     model = Device
+
+    def render_to_response(self, context):
+        # Look for a 'format=json' GET argument
+        if self.request.GET.get('format') == 'json':
+            data = {'pid': DeviceStatus.objects.filter(channel='pid').first().status} #first porque esta como -date
+            return self.render_to_json_response(data)
+        else:
+            return super(PIDAUtoView, self).render_to_response(context)
 
 
 class StatusView(ListView):
