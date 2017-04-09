@@ -36,6 +36,7 @@ class JSONResponseMixin(object):
 
 class PIDAutoView(JSONResponseMixin, DetailView):
     model = Device
+    allowed_methods = ['GET', 'POST']
 
     def render_to_response(self, context):
         # Look for a 'format=json' GET argument
