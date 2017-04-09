@@ -16,8 +16,8 @@
         $.getJSON('?format=json', function(response) {
             console.log(response);
             var temp = response.pid.sensors[0].value;
-            var sp = response.setpoints.SP;
-            var t = response.pid_time;
+            var sp = response.pid.setpoints.SP;
+            var t = response.pid.pid_time;
 
             $("[data-current_temp]").val(temp);
             $("[data-set_point]").val(sp);
