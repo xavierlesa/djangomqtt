@@ -17,8 +17,8 @@
             console.log(response);
             var temp = response.pid.sensors[0].value;
             var sp = response.pid.setpoints.SP;
-            var ct = response.pid.pid_time || '--:--';
-            var st = response.pid.pid_settime || '--:--';
+            var ct = response.pid.setpoints.pid_time || '--:--';
+            var st = response.pid.setpoints.pid_settime || '--:--';
 
             $("[data-current_temp]").text(temp);
             $("[data-set_point]").text(sp);

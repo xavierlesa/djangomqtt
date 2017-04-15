@@ -70,7 +70,7 @@ class PIDAutoView(JSONResponseMixin, DetailView):
             params.update({'D': params.get('D')})
 
             print("publish to 260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff => %s" % params)
-            msg = "SP:%(set_point)s&P=%(P)s&I=%(I)s&D=%(D)s&t=%(time)s" % params
+            msg = "SP=%(set_point)s&P=%(P)s&I=%(I)s&D=%(D)s&t=%(time)s" % params
             publish_message(
                 device_topic="260c4ad9-a5ae-49e6-95ec-b9bc643d1049/onoff", 
                 message=str(msg)
