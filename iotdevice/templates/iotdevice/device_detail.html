@@ -21,8 +21,8 @@
             var ct = pid.setpoints.pid_time || '--:--';
             var st = pid.setpoints.pid_settime || '--:--';
 
-            $("[data-current_temp]").text(temp);
-            $("[data-set_point]").text(sp);
+            $("[data-current_temp]").text(temp.toFixed(2));
+            $("[data-set_point]").text(sp.toFixed(2));
             $("[data-current_time]").text(ct);
             $("[data-set_time]").text(st);
         });
