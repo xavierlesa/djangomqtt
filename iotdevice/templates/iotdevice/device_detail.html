@@ -16,7 +16,7 @@
         $.getJSON('?format=json', function(response) {
             console.log(response);
             var pid = response.pid;
-            var temp = pid.sensors[0].value;
+            var temp = pid.devices[0].value;
             var sp = pid.setpoints.SP;
             var ct = pid.setpoints.pid_time || '--:--';
             var st = pid.setpoints.pid_settime || '--:--';
