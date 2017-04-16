@@ -50,6 +50,7 @@
             data: $form.serialize(),
             dataType: 'json',
             global: false,
+            cache: false,
             beforeSend: function(jqXHR){
                 console.log('loading...');
             }
