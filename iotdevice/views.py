@@ -39,13 +39,13 @@ class PIDAutoView(JSONResponseMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PIDAutoView, self).get_context_data(**kwargs)
-        context.update({'pid': DeviceStatus.objects.filter(channel='pid').first()}) #first porque esta como -date
+        context.update({'pid': DeviceStatus.objects.filter(channel='pid').last()}) #first porque esta como -date
         return context
 
     def render_to_response(self, context):
         # Look for a 'format=json' GET argument
         if self.request.GET.get('format') == 'json':
-            data = {'pid': DeviceStatus.objects.filter(channel='pid').first().status} #first porque esta como -date
+            data = {'pid': DeviceStatus.objects.filter(channel='pid').last().status} #first porque esta como -date
             return self.render_to_json_response(data)
         else:
             return super(PIDAutoView, self).render_to_response(context)
