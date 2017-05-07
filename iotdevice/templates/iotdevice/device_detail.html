@@ -15,8 +15,9 @@
     function fullStatus() {
         $.getJSON('?format=json', function(response) {
             console.log(response);
+            var ht = response.ht;
             var pid = response.pid;
-            var temp = pid.devices[0].value;
+            var temp = ht.devices[0].value;
             var sp = pid.setpoints.SP;
             var ct = pid.setpoints.pid_time || '--:--';
             var st = pid.setpoints.pid_settime || '--:--';
