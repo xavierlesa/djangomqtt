@@ -122,4 +122,6 @@ def get_or_create_device(sender, device_id, name, channels="ht", **kwargs):
 
 @receiver(device_status_signal)
 def update_status_device(sender, device_id, status, channel, **kwargs):
+    # Elimina lo anterior - no quiero historial ahora
+    DeviceStatus.objects.filter(device_id=device_id, channel=channel).delete()
     DeviceStatus.objects.create(device_id=device_id, status=status, channel=channel)
