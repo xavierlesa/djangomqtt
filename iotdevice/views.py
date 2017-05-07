@@ -45,7 +45,7 @@ class PIDAutoView(JSONResponseMixin, DetailView):
     def render_to_response(self, context):
         # Look for a 'format=json' GET argument
         if self.request.GET.get('format') == 'json':
-            data = {'object': this.get_object().status, 'pid': DeviceStatus.objects.filter(channel='pid')[0].status} #first porque esta como -date
+            data = {'object': self.object.status, 'pid': DeviceStatus.objects.filter(channel='pid')[0].status} #first porque esta como -date
             return self.render_to_json_response(data)
         else:
             return super(PIDAutoView, self).render_to_response(context)
